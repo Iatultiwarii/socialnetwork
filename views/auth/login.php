@@ -1,3 +1,9 @@
+<?php 
+require_once 'config/database.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/error.log');?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +29,6 @@
             <p>Don't have an account? <a href="index.php?route=signup">Create New Account</a></p>
         </form>
     </div>
-
-    <script src="../assets/js/validation.js"></script>
+    <script src="assets/js/validation.js"></script>
 </body>
 </html>

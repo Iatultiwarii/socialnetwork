@@ -1,5 +1,11 @@
 <?php
 require_once 'models/Post.php';
+require_once 'config/database.php';
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/../error.log');
 
 class PostController {
     private $postModel;
@@ -21,7 +27,9 @@ class PostController {
         }
     }
     public function createPost() {
+        ob_clean(); // Clear any previous output
         header('Content-Type: application/json');
+
         $response = ["status" => "error", "message" => "Initial error"];
 
         try {
@@ -30,7 +38,6 @@ class PostController {
                 throw new Exception("User not logged in");
             }
 
-            
             if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
                 throw new Exception("Invalid request method");
             }
@@ -43,10 +50,11 @@ class PostController {
             $finfo = new finfo(FILEINFO_MIME_TYPE);
             $mime = $finfo->file($image['tmp_name']);
             $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-            
+
             if (!in_array($mime, $allowedTypes)) {
                 throw new Exception("Only JPG/PNG images allowed");
             }
+
             if ($image['size'] > 2 * 1024 * 1024) {
                 throw new Exception("Image too large (max 2MB)");
             }
@@ -57,13 +65,15 @@ class PostController {
             if (!move_uploaded_file($image['tmp_name'], $destination)) {
                 throw new Exception("Failed to save image");
             }
-            $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
+
+            $description = htmlspecialchars(trim($_POST['description'] ?? ''), ENT_QUOTES, 'UTF-8');
             if (empty($description)) {
                 throw new Exception("Description cannot be empty");
             }
+
             $user_id = $_SESSION['user_id'];
             $webPath = 'assets/blogImage/' . $filename;
-            
+
             if ($this->postModel->create($user_id, $webPath, $description)) {
                 $response = [
                     "status" => "success",
@@ -71,11 +81,13 @@ class PostController {
                     "post" => [
                         "image" => $webPath,
                         "description" => $description,
-                        "user_id" => $user_id
+                        "user_id" => $user_id,
+                        "user_profile_picture" => 'assets/profilePicture/' . ($_SESSION['user_profile_picture'] ?? 'default.png'),
+                        "user_full_name" => $_SESSION['full_name'] ?? 'User'
                     ]
                 ];
             } else {
-                throw new Exception("Database error");
+                throw new Exception("Database error while saving post");
             }
 
         } catch (Exception $e) {
@@ -83,8 +95,8 @@ class PostController {
             error_log("Post error: " . $e->getMessage());
         }
 
+        ob_clean(); // Clear again in case something was echoed
         echo json_encode($response);
         exit();
     }
 }
-?>

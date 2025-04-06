@@ -47,6 +47,19 @@ input {
     text-align: center;
     margin: 20px;
 }
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: -10px;
+    margin-bottom: 15px;
+    display: block;
+}
 h2 {
     margin-bottom: 20px;
     font-size: 22px;
@@ -141,4 +154,85 @@ p a:hover {
 }
 #profile_picture {
     display: none;
+}
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+        align-items: flex-start;
+    }
+
+    #signupForm,
+    #loginForm {
+        width: 100%;
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .column {
+        width: 100%;
+    }
+
+    .password-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .password-container .input-group {
+        width: 100%;
+    }
+
+    #profilePreview {
+        width: 100px;
+        height: 100px;
+    }
+
+    button[type="submit"],
+    #customUploadButton {
+        width: 100%;
+    }
+
+    .editable-name {
+        font-size: 18px;
+    }
+
+    .dob-display,
+    .editable-input {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    #signupForm,
+    #loginForm {
+        padding: 15px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"],
+    select {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    button[type="submit"],
+    #customUploadButton {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    label {
+        font-size: 14px;
+    }
+
+    #profilePreview {
+        width: 80px;
+        height: 80px;
+    }
 }
