@@ -1,18 +1,14 @@
-/* General Styles */
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f5f5f5;
 }
-
-/* Dashboard Layout */
 .dashboard {
     display: flex;
     min-height: 100vh;
 }
-
-/* Left Panel - Profile Section */
 .left-panel {
     width: 25%;
     background-color: #fff;
@@ -20,12 +16,10 @@ body {
     text-align: center;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
-
 .left-panel h2 {
     margin-bottom: 15px;
     color: #333;
 }
-
 .profile-img {
     width: 120px;
     height: 120px;
@@ -34,13 +28,11 @@ body {
     margin-bottom: 10px;
     border: 3px solid #007bff;
 }
-
 .left-panel p {
     font-size: 16px;
     color: #555;
     margin: 5px 0;
 }
-
 .logout-btn {
     display: inline-block;
     background-color: #ff4d4d;
@@ -51,18 +43,13 @@ body {
     margin-top: 10px;
     font-size: 14px;
 }
-
 .logout-btn:hover {
     background-color: #cc0000;
 }
-
-/* Right Panel - Post Section */
 .right-panel {
     width: 75%;
     padding: 20px;
 }
-
-/* Post Form */
 .post-form {
     background: #fff;
     padding: 15px;
@@ -85,12 +72,10 @@ body {
     resize: none;
     margin-bottom: 10px;
 }
-
 .post-form input[type="file"] {
     display: block;
     margin-bottom: 10px;
 }
-
 #post_btn {
     background-color: #007bff;
     color: white;
@@ -99,19 +84,15 @@ body {
     border-radius: 5px;
     cursor: pointer;
 }
-
 #post_btn:hover {
     background-color: #0056b3;
 }
-
-/* Posts Section */
 .posts {
     background: #fff;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
 .post {
     margin-bottom: 15px;
     padding: 10px;
@@ -121,24 +102,19 @@ body {
 .post:last-child {
     border-bottom: none;
 }
-
 .post img {
     width: 100%;
     max-height: 300px;
     object-fit: cover;
     border-radius: 5px;
 }
-
 .post p {
     margin: 10px 0;
     font-size: 14px;
 }
-
 .post small {
     color: #777;
 }
-
-/* Responsive Design */
 @media (max-width: 900px) {
     .dashboard {
         flex-direction: column;
@@ -154,7 +130,6 @@ body {
         width: 100%;
     }
 }
-/* Post Section */
 .post {
     background: #fff;
     padding: 15px;
@@ -162,31 +137,26 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 15px;
 }
-
-/* Post Header - User Image & Name */
+.editable:hover{
+    cursor:progress;
+}
 .post-header {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
 }
-
-/* Profile Image Styling */
 .user-profile-img {
-    width: 40px!important;  /* Small confined space */
-    height: 40px; /* Equal width & height for a perfect circle */
-    border-radius: 50%; /* Circular shape */
-    object-fit: cover; /* Ensures the image fits within the circle */
-    border: 2px solid #007bff; /* Optional border to highlight the image */
-    background-color: #f0f0f0; /* Background color in case of no image */
+    width: 40px!important;  
+    height: 40px; 
+    border-radius: 50%; 
+    object-fit: cover; 
+    border: 2px solid #007bff; 
+    background-color: #f0f0f0; 
 }
-
-
 .post-user {
     font-weight: bold;
     color: #333;
 }
-
-/* Post Image */
 .post-img {
     width: 100%;
     max-height: 300px;
@@ -194,12 +164,9 @@ body {
     border-radius: 5px;
     margin-top: 10px;
 }
-
-/* Like & Dislike Buttons */
 .post-actions {
     margin-top: 10px;
 }
-
 .like-btn, .dislike-btn {
     background: none;
     border: none;
@@ -208,11 +175,9 @@ body {
     margin-right: 5px;
     transition: 0.2s;
 }
-
 .like-btn:hover {
     color: green;
 }
-
 .dislike-btn:hover {
     color: red;
 }

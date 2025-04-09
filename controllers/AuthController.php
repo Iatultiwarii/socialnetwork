@@ -1,6 +1,8 @@
 <?php
-require_once 'models/User.php';
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+require_once 'models/User.php';
 class AuthController
 {
     private $userModel;
@@ -59,15 +61,20 @@ class AuthController
             if (
                 empty($fullname) || empty($email) || empty($password) ||
                 empty($confirm_password) || empty($dob) || empty($profilePic['name'])
-            ) {
+            )
+             {
                 $error = "All fields are required.";
-            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            } 
+            elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $error = "Invalid email format.";
-            } elseif ($password !== $confirm_password) {
+            } 
+            elseif ($password !== $confirm_password) {
                 $error = "Passwords do not match.";
-            } elseif (strlen($password) < 6) {
+            } 
+            elseif (strlen($password) < 6) {
                 $error = "Password must be at least 6 characters.";
-            } else {
+            }
+             else {
                 $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
                 $fileType = mime_content_type($profilePic['tmp_name']);
 
@@ -97,6 +104,60 @@ class AuthController
         }
         require_once 'views/auth/register.php';
     }
+    public function updateProfile()
+       {
+    
+    
+
+    $userId = $_SESSION['user_id'] ?? null;
+    if (!$userId) {
+        http_response_code(401);
+        echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
+        exit;
+    }
+    $response = ['status' => 'error', 'message' => 'No valid update'];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $action = $_POST['action'] ?? '';
+
+        if ($action === 'update_name' && isset($_POST['full_name'])) {
+            $fullName = trim($_POST['full_name']);
+            if ($this->userModel->updateName($userId, $fullName)) {
+                $_SESSION['full_name'] = $fullName;
+                $response = ['status' => 'success', 'message' => 'Name updated'];
+            }
+        }
+ 
+        if ($action === 'update_picture' && isset($_FILES['profile_picture'])) {
+            $file = $_FILES['profile_picture'];
+
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+            $fileType = mime_content_type($file['tmp_name']);
+
+            if (!in_array($fileType, $allowedTypes)) {
+                $response = ['status' => 'error', 'message' => 'Invalid image format.'];
+            } elseif ($file['size'] > 2 * 1024 * 1024) {
+                $response = ['status' => 'error', 'message' => 'Image must be less than 2MB.'];
+            } else {
+                $newFileName = uniqid() . "_" . basename($file['name']);
+                $uploadPath = $this->uploadDir . $newFileName;
+
+                if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
+                    $webPath = 'assets/profilePicture/' . $newFileName;
+
+                    if ($this->userModel->updateProfilePicture($userId, $webPath)) {
+                        $_SESSION['profile_picture'] = $webPath;
+                        $response = ['status' => 'success', 'message' => 'Profile picture updated'];
+                    } else {
+                        $response = ['status' => 'error', 'message' => 'Failed to update DB'];
+                    }
+                } else {
+                    $response = ['status' => 'error', 'message' => 'Failed to upload file'];
+                }
+            }
+        }
+    }
+    echo json_encode($response);
+}
     public function logout()
     {
         session_start();

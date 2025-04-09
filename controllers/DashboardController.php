@@ -7,8 +7,7 @@ class DashboardController {
     private $userModel;
     private $postModel;
     private $likeModel;
-
-    public function __construct() {
+        public function __construct() {
         $db = new Database();
         $this->userModel = new User($db);
         $this->postModel = new Post($db);
