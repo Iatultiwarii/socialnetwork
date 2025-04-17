@@ -39,7 +39,7 @@ class Post
 
    
                                                                                                                                                                               
-    public function addLike($postId, $userId) {
+    public function addLike($postId) {
         try {
            
             $sql = "UPDATE posts SET likes = (likes + 1) WHERE id = ?";

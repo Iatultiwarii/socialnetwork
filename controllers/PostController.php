@@ -14,7 +14,7 @@ class PostController
         $this->postModel = new Post($db);
         $this->uploadDir = realpath(__DIR__ . '/../assets/blogImage/') . '/';
     }
-    public function deletePost()
+    public function deletePost($id)
     {
         $id = $_POST['id'] ?? null;
         $user_id = $_SESSION['user_id'] ?? null;
@@ -37,46 +37,20 @@ class PostController
     public function likePost($id)
     {
         header('Content-Type: application/json');
-        ob_clean(); // Clear any previous output
-    
-        try {
-            
+        ob_clean(); 
             $postId = isset($_POST['id']) ? (int)$_POST['id'] : 0;
-            $userId = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : 0;
+            $userId = isset($_SESSION['user']['id']) ? (int)$_SESSION['user']['id'] : 0;
+            $result = $this->postModel->addLike($postId);
     
-            // Validate inputs
-            if ($postId <= 0) {
-                throw new Exception('Invalid post ID');
-            }
-            if ($userId <= 0) {
-                throw new Exception('User not logged in');
-            }
-    
-            // Call addLike
-            $result = $this->postModel->addLike($postId, $userId);
-    
-            // Verify result
             if (!isset($result['likes'])) {
                 throw new Exception('Failed to retrieve likes count');
             }
-    
             echo json_encode([
                 'status' => 'success',
-                'likes' => (int)$result['likes']
+                'likes' => isset($result['likes'])?(int)$result['likes']:0,
             ]);
-        } catch (Exception $e) {
-            http_response_code(400);
-            echo json_encode([
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ]);
-        }
-        exit();
+        
     }  
-
-
-    
-
     public function createPost()
     {
         header('Content-Type: application/json');

@@ -53,9 +53,9 @@
                             <small>Posted on <?php echo htmlspecialchars($row['created_at']); ?></small>
                             <div class="post-actions">
                                 <button class="delete-btn" data-id="<?php echo $row['id']; ?>">🗑️ Delete</button>
-                                <button class="like-btn" data-post-id="<?php echo $row['id']; ?>">👍 Like</button>
+                                <button class="like-btn" data-id="<?php echo $row['id']; ?>">👍 Like</button>
                                 <span id="like-count-<?php echo $row['id']; ?>">
-    <?php echo htmlspecialchars($row['likes'] ?? 0); ?>
+                                <?php echo htmlspecialchars($row['likes'] ?? 0); ?>
 </span>
                             </div>
                         </div>

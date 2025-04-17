@@ -1,5 +1,5 @@
 * {
-    margin: 0;
+  margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
@@ -170,7 +170,6 @@ p a:hover {
         flex-direction: column;
         gap: 10px;
     }
-
     .column {
         width: 100%;
     }

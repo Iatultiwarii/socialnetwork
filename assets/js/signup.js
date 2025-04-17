@@ -51,7 +51,8 @@ $(document).ready(function () {
     function validateFullName() {
         const name = $fullName.val().trim();
         $fullNameError.text('');
-        if (name === '') {
+        if (name === '') 
+        {
             $fullNameError.text('Full name is required!');
             $fullName.css('border-color', 'red');
             return false;
@@ -61,13 +62,28 @@ $(document).ready(function () {
     }
     function previewProfileImage(input) {
         const file = input.files[0];
-        if (file && file.type.startsWith('image/')) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                $profileImage.attr('src', e.target.result);
-            };
-            reader.readAsDataURL(file);
+        if (!file) {
+            alert('No file selected!');
+            $profileImage.attr('src', '');
+            return;
         }
+        const allowedTypes = ['image/jpeg', 'image/png'];
+        if (!allowedTypes.includes(file.type)) {
+            alert('Only JPG, JPEG, or PNG files are allowed!');
+            $profileImage.attr('src', '');
+            return;
+        }
+        const maxSize = 2 * 1024 * 1024;
+        if (file.size > maxSize) {
+            alert('File is too large! Maximum size is 2MB.');
+            $profileImage.attr('src', '');
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            $profileImage.attr('src', e.target.result);
+        };
+        reader.readAsDataURL(file);
     }
     $password.on('input', validatePasswords);
     $confirmPassword.on('input', validatePasswords);

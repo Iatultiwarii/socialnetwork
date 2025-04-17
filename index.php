@@ -4,7 +4,6 @@ require_once 'config/database.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 $route = isset($_GET['route']) ? $_GET['route'] : 'login';
-
 try {
     switch ($route) {
         case 'login':
@@ -40,19 +39,17 @@ try {
                 require_once 'controllers/AuthController.php';
                 $authController = new AuthController();
                 $authController->updateProfile();
-                break;
-                
-                
+                break;  
         case 'delete_post':
             require_once 'controllers/PostController.php';
             $postController = new PostController();
             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
                 $postId = $_POST['id'];
                 $userId = $_SESSION['user']['id'];
-                $postController->deletePost($postId, $userId);
+                $postController->deletePost($postId);
             }
-            exit;
-            case 'like_post':
+            break;
+        case 'like_post':
                 require_once 'controllers/PostController.php';
                 $postController = new PostController();
                 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
@@ -60,7 +57,7 @@ try {
                     $userId = $_SESSION['user']['id'];
                     $postController->likePost($postId);
                 }
-                exit;
+            break;
         default:
             require 'controllers/AuthController.php';
             $auth = new AuthController();
