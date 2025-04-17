@@ -13,11 +13,11 @@ $(document).ready(function () {
     const $profileImage = $('#profileImage');
     const passwordPattern = /^[a-zA-Z0-9$%@&*]+$/;
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    function validatePasswords() {
+    function validatePasswords(){
         const passVal = $password.val().trim();
         const confirmVal = $confirmPassword.val().trim();
         $password.css('border-color', '#ccc');
-        $confirmPassword.css('border-color', '#ccc');
+        $confirmPassword.css('border-color','#ccc');
         $passwordError.text('');
         $confirmPasswordError.text('');
         if (!passwordPattern.test(passVal)) {
@@ -30,7 +30,6 @@ $(document).ready(function () {
             $confirmPassword.css('border-color', 'red');
             return false;
         }
-
         return true;
     }
     function validateEmail() {
@@ -49,7 +48,6 @@ $(document).ready(function () {
         }
         return true;
     }
-
     function validateFullName() {
         const name = $fullName.val().trim();
         $fullNameError.text('');
@@ -61,7 +59,6 @@ $(document).ready(function () {
         $fullName.css('border-color', '#ccc');
         return true;
     }
-
     function previewProfileImage(input) {
         const file = input.files[0];
         if (file && file.type.startsWith('image/')) {
@@ -81,12 +78,10 @@ $(document).ready(function () {
     });
     $form.on('submit', function (e) {
         e.preventDefault();
-
         const isValidName = validateFullName();
         const isValidEmail = validateEmail();
         const isValidPassword = validatePasswords();
         const dob = $dob.val().trim();
-
         if (!isValidName || !isValidEmail || !isValidPassword || dob === '') {
             if (dob === '') $dob.css('border-color', 'red');
             else $dob.css('border-color', '#ccc');

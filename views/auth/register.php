@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
- 
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
@@ -19,8 +18,7 @@
                 <p class="error"><?php echo htmlspecialchars($error); ?></p>
             <?php endif; ?>
             <div class="profile-picture-container">
-                <img id="profileImage" class="profile-picture" src="assets/profilePicture/default-profile.png" alt="Profile Picture">
-                <label for="profile_picture" class="upload-btn">Upload Profile Picture</label>
+                <img id="profileImage" class="profile-picture" src="assets/profilePicture/default-profile.png" alt="Profile Picture">             <label for="profile_picture" class="upload-btn">Upload Profile Picture</label>
                 <input type="file" id="profile_picture" name="profile_picture" accept="image/*">
             </div>
             <label for="fullname">Full Name</label>
@@ -51,6 +49,5 @@
     </div>
     </div>
     <script src="assets/js/signup.js"></script>
-
 </body>
 </html>

@@ -41,6 +41,8 @@ try {
                 $authController = new AuthController();
                 $authController->updateProfile();
                 break;
+                
+                
         case 'delete_post':
             require_once 'controllers/PostController.php';
             $postController = new PostController();
@@ -50,6 +52,15 @@ try {
                 $postController->deletePost($postId, $userId);
             }
             exit;
+            case 'like_post':
+                require_once 'controllers/PostController.php';
+                $postController = new PostController();
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
+                    $postId = $_POST['id'];
+                    $userId = $_SESSION['user']['id'];
+                    $postController->likePost($postId);
+                }
+                exit;
         default:
             require 'controllers/AuthController.php';
             $auth = new AuthController();

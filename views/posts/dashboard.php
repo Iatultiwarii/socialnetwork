@@ -22,17 +22,24 @@
             <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
             <a href="index.php?route=logout" class="logout-btn">Logout</a>
         </div>
-
         <div class="right-panel">
-            <div class="post-form">
-                <h2>Create a Post</h2>
-                <form id="post_form" method="post" enctype="multipart/form-data" action="index.php?route=post_action&action=create_post">
-                    <input type="file" name="blog_image" accept="image/*" required>
-                    <textarea name="description" placeholder="Write something..." required></textarea>
-                    <button type="submit" id="post_btn">Post</button>
-                </form>
+        <div class="post-form">
+    <h2>Create a Post</h2>
+    <form id="post_form" method="post" enctype="multipart/form-data" action="index.php?route=post_action&action=create_post">
+        <div class="form-group">
+            <label for="blog_image">Upload Image:</label>
+            <input type="file" id="blog_image" name="blog_image" accept="image/*" required>
+            <div id="imagePreviewContainer">
+                <img id="blogImagePreview" src="assets/images/default-image.png" alt="Image Preview" style="max-width: 200px; display: none;">
             </div>
-
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" placeholder="Write something..." required></textarea>
+        </div>
+        <button type="submit" id="post_btn">Post</button>
+    </form>
+</div>
             <div class="posts">
                 <h2>Previous Posts</h2>
                 <div id="my_content_post">
@@ -47,32 +54,20 @@
                             <div class="post-actions">
                                 <button class="delete-btn" data-id="<?php echo $row['id']; ?>">🗑️ Delete</button>
                                 <button class="like-btn" data-post-id="<?php echo $row['id']; ?>">👍 Like</button>
-                                <span id="like-count-<?php echo $row['id']; ?>">0</span>
-                                <span id="dislike-count-<?php echo $row['id']; ?>">0</span>
+                                <span id="like-count-<?php echo $row['id']; ?>">
+    <?php echo htmlspecialchars($row['likes'] ?? 0); ?>
+</span>
                             </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
             </div>
         </div>
-                    </div>
+  </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="assets/js/script.js"></script>
-    <script>
-        $(document).on('click', '.delete-btn', function () {
-            const postId = $(this).data('id');
-            $.ajax({
-                url: 'index.php?route=delete_post',
-                type: 'POST',
-                data: { id: postId },
-                success: function (response) {
-                    $(`#post_${postId}`).remove();
-                },
-                error: function (xhr, status, error) {
-                    console.error('Delete failed:', error);
-                }
-            });
-        });
-    </script>
+<script src="assets/js/script.js"></script>
+<script>
+    
+</script>
 </body>
 </html>

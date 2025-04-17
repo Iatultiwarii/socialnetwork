@@ -34,11 +34,12 @@ $(document).ready(function () {
                                 <div class="post-header">
                                     <img src="${$('.profile-img').attr('src')}" class="user-profile-img">
                                     <span class="post-user">${data.post.description}</span>
-                                    <button class="delete-btn" data-id="${data.post.id}">Delete</button>
+                                   
                                 </div>
                                 <img src="${data.post.image}" class="post-img">
                                 <small>Posted just now</small>
                                 <div class="post-actions">
+                                 <button class="delete-btn" data-id="${data.post.id}">Delete</button>
                                     <button class="like-btn">👍 Like</button>
                                     <span class="like-count">0</span>
                                 </div>
@@ -60,6 +61,40 @@ $(document).ready(function () {
             });
         });
     }
+    $(document).on('click', '.delete-btn', function () {
+        const postId = $(this).data('id');
+        $.ajax({
+            url: 'index.php?route=delete_post',
+            type: 'POST',
+            data: { id: postId },
+            success: function (response) {
+                $(`#post_${postId}`).remove();
+            },
+            error: function (xhr, status, error) 
+            {
+                console.error('Delete failed:', error);
+            }
+        });
+    });
+    $(document).on('click', '.like-btn', function () {
+    const postId = $(this).data('id');
+    $.ajax({
+        url: 'index.php?route=like_post',
+        data: { id: postId },
+        dataType: 'json', 
+        success: function(res) {
+            if (res.status === 'success'){
+                $('#like-count-' + postId).text(res.likes);
+            } else {
+                alert("Error: " + res.message);
+         }
+        },
+        error: function(xhr, status, error) {
+            console.error('Like failed:', error);
+          alert('Something went wrong. Please try again.');
+        }
+    });
+    });
     $(document).on('click', '.editable', function () {
         console.log('Edit name clicked');
         $('#full_name_text').hide();
@@ -117,6 +152,7 @@ $(document).ready(function () {
             }
         });
     });
+    
     $(document).on('click', '.delete-btn', function () {
         const postId = $(this).data('id');
         console.log('Deleting post:', postId);
@@ -134,3 +170,23 @@ $(document).ready(function () {
         });
     });
 });
+$(document).ready(function() {
+    function previewBlogImage(input) {
+        const $previewImage = $('#blogImagePreview');
+        const file = input.files[0];
+        
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                $previewImage.attr('src', e.target.result).show();
+            };
+            reader.readAsDataURL(file);
+        } else {  
+            $previewImage.attr('src', 'assets/images/default-image.png').hide();
+        }
+    }
+    $('#blog_image').on('change', function() {
+        previewBlogImage(this);
+    });
+});
+

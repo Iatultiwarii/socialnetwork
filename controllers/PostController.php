@@ -34,6 +34,49 @@ class PostController
             echo json_encode(['status' => 'error', 'message' => 'Invalid request']);
         }
     }
+    public function likePost($id)
+    {
+        header('Content-Type: application/json');
+        ob_clean(); // Clear any previous output
+    
+        try {
+            
+            $postId = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+            $userId = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : 0;
+    
+            // Validate inputs
+            if ($postId <= 0) {
+                throw new Exception('Invalid post ID');
+            }
+            if ($userId <= 0) {
+                throw new Exception('User not logged in');
+            }
+    
+            // Call addLike
+            $result = $this->postModel->addLike($postId, $userId);
+    
+            // Verify result
+            if (!isset($result['likes'])) {
+                throw new Exception('Failed to retrieve likes count');
+            }
+    
+            echo json_encode([
+                'status' => 'success',
+                'likes' => (int)$result['likes']
+            ]);
+        } catch (Exception $e) {
+            http_response_code(400);
+            echo json_encode([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ]);
+        }
+        exit();
+    }  
+
+
+    
+
     public function createPost()
     {
         header('Content-Type: application/json');
@@ -90,6 +133,7 @@ class PostController
                 throw new Exception("Database error while saving post");
             }
         } 
+        
         catch (Exception $e)
         {
             $response["message"] = $e->getMessage();

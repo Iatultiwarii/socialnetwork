@@ -125,7 +125,6 @@ body {
         box-shadow: none;
         border-bottom: 2px solid #ddd;
     }
-
     .right-panel {
         width: 100%;
     }
@@ -181,4 +180,95 @@ body {
 .dislike-btn:hover {
     color: red;
 }
-
+.post-form {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.post-form h2 {
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 20px;
+    font-weight: bold;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333;
+}
+.form-group input[type="file"] {
+    width: 1170px; 
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    font-size: 14px;
+}
+.form-group textarea {
+    width: 1170px; 
+    min-height: 100px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+    font-size: 14px;
+    background-color: #f9f9f9;
+}
+.form-group input[type="file"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+#imagePreviewContainer {
+    margin-top: 10px;
+}
+#blogImagePreview {
+    max-width: 1100px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #fff;
+    display: none;
+}
+#post_btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+#post_btn:hover {
+    background-color: #0056b3;
+}
+#post_btn:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 10px;
+    display: none;
+}
+@media (max-width: 900px) {
+    .post-form {
+        max-width: 100%;
+        margin: 10px;
+        padding: 15px;
+    }
+    .form-group input[type="file"],
+    .form-group textarea {
+        width: 100%;
+    }
+}

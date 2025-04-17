@@ -1,7 +1,6 @@
 <?php
 require_once 'models/User.php';
 require_once 'models/Post.php';
-require_once 'models/Like.php';
 
 class DashboardController {
     private $userModel;
@@ -11,7 +10,7 @@ class DashboardController {
         $db = new Database();
         $this->userModel = new User($db);
         $this->postModel = new Post($db);
-        $this->likeModel = new Like($db);
+       
     }
     public function index() {
         if (!isset($_SESSION['user_id'])) {
